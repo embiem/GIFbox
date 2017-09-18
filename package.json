@@ -1,0 +1,11 @@
+{
+  "name": "gifbox-frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "autobahn": "^17.5.2",
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4"
+  }
+}
