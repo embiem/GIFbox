@@ -58,8 +58,8 @@ GPIO.cleanup()
 start_time = time()
 
 # RAW-GIF
-params_raw = ['sudo', path_vid_to_gif, path_video, path_gif_raw]
-subprocess.check_call(params_raw)
+params_raw = ['bash', path_vid_to_gif, path_video, path_gif_raw]
+subprocess.call(params_raw)
 
 raw_time = time()
 print('raw took %d seconds' % (raw_time - start_time))
