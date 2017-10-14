@@ -1,4 +1,4 @@
-import sys
+import sys, json
 import os.path
 import subprocess
 from picamera import PiCamera
@@ -31,6 +31,12 @@ sleep(1)
 GPIO.output(23, GPIO.LOW)
 GPIO.output(24, GPIO.LOW)
 
+# actually recording video
+print json.dumps({
+    "phase": 1
+})
+sys.stdout.flush()
+
 # Cam setup
 camera = PiCamera(resolution=(640, 480))
 #camera.image_effect = 'cartoon'
@@ -55,6 +61,10 @@ GPIO.output(24, GPIO.HIGH)
 GPIO.cleanup()
 
 # Processing
+print json.dumps({
+    "phase": 2
+})
+sys.stdout.flush()
 start_time = time()
 
 # RAW-GIF
@@ -70,6 +80,12 @@ params_final = [
     '-delete', '-1', '-delete', '0', '-reverse', '-coalesce',
     '-delay', '4', path_gif_raw, '-loop', '0', path_gif_final]
 subprocess.check_call(params_final)
+
+# finished! GIF created
+print json.dumps({
+    "phase": 3
+})
+sys.stdout.flush()
 
 end_time = time()
 print('boomerang-style took %d seconds' % (end_time - start_time))
