@@ -9,7 +9,9 @@ const ProcessingContainer = props => <Processing {...props} />;
 
 const mapStateToProps = state => {
   return {
-    lastGifPath: `${getUrl()}/${state.general.lastGifPath}`
+    lastGifPath: state.general.lastGifPath
+      ? `${getUrl()}/${state.general.lastGifPath}`
+      : ''
   };
 };
 
@@ -20,7 +22,7 @@ const mapDispatchToProps = dispatch => {
         if (res.lastGifPath) {
           dispatch(generalActions.setLastGifPath(res.lastGifPath));
         }
-      })
+      });
     },
     checkProcessingStatus: () => {
       getStatus().then(res => {
