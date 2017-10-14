@@ -71,8 +71,9 @@ start_time = time()
 params_raw = ['bash', path_vid_to_gif, path_video, path_gif_raw]
 subprocess.call(params_raw)
 
-raw_time = time()
-print('raw took %d seconds' % (raw_time - start_time))
+end_time = time()
+raw_duration = end_time - start_time
+start_time = time()
 
 # Boomerang-style
 params_final = [
@@ -88,4 +89,9 @@ print json.dumps({
 sys.stdout.flush()
 
 end_time = time()
-print('boomerang-style took %d seconds' % (end_time - start_time))
+final_duration = end_time - start_time
+print json.dumps({
+    "durationRaw": raw_duration,
+    "durationFinal": final_duration
+})
+sys.stdout.flush()

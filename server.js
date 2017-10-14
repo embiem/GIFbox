@@ -70,6 +70,12 @@ app.get('/start', (req, res) => {
         console.log('phase ', data.phase);
         phase = data.phase;
       }
+      if (data.durationRaw) {
+        console.log(`Raw took ${data.durationRaw}s`);
+      }
+      if (data.durationFinal) {
+        console.log(`Final took ${data.durationFinal}s`);
+      }
     } catch (err) {
       console.error(err);
     }

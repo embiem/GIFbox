@@ -32,7 +32,7 @@ class Processing extends React.Component {
           className={classes.root + ' animated lightSpeedIn entry-first'}
           elevation={4}
         >
-          <Typography type="display2">
+          <Typography type="display1">
             Creating your GIF...
           </Typography>
         </Paper>
