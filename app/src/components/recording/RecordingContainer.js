@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Recording from './Recording';
 import { generalActions } from '../../redux/actions';
 import { PHASES } from '../../constants';
+import { startRecording, getStatus } from '../../client';
 
 const RecordingContainer = props => <Recording {...props} />;
 
@@ -12,7 +13,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRecordingFinish: () => dispatch(generalActions.setPhase(PHASES.PROCESSING))
+    onStartRecording: startRecording,
+    checkRecordingStatus: () => {
+      getStatus().then(res => {
+        if (res.phase > 1) {
+          dispatch(generalActions.setPhase(PHASES.PROCESSING));
+        }
+      });
+    }
   };
 };
 

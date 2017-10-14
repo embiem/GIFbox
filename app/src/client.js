@@ -14,7 +14,7 @@ function parseJSON(response) {
   return response.json();
 }
 
-function getUrl() {
+export function getUrl() {
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     return 'http://localhost:3001';
 } else {
@@ -33,3 +33,12 @@ export const getStatus = () =>
   })
     .then(checkStatus)
     .then(parseJSON);
+
+export const getLastGif = () =>
+  fetch(getUrl() + '/last', {
+    headers: {
+      Accept: 'application/json'
+    }
+  })
+  .then(checkStatus)
+  .then(parseJSON);

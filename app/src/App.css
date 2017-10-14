@@ -1,3 +1,15 @@
 .App {
   text-align: center;
 }
+
+.entry-first {
+  animation-delay: 0s;
+}
+
+.entry-second {
+  animation-delay: 1s;
+}
+
+.entry-third {
+  animation-delay: 2s;
+}

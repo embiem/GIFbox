@@ -8,10 +8,19 @@ class Result extends React.Component {
       <Grid item>
         <Grid container direction="column">
           <Grid item>
-            <img src={this.props.gifPath} alt="Final GIF" />
+            <img
+              className="animated flipInY entry-first"
+              src={this.props.gifPath}
+              alt="Final GIF"
+            />
           </Grid>
           <Grid item>
-            <Button raised color="primary" onClick={this.props.onFinishClick}>
+            <Button
+              raised
+              color="primary"
+              className="animated fadeInUp entry-third"
+              onClick={this.props.onFinishClick}
+            >
               FINISH
             </Button>
           </Grid>

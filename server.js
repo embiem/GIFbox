@@ -5,6 +5,8 @@ const PythonShell = require('python-shell');
 const uuidv4 = require('uuid/v4');
 const fs = require('fs');
 
+// data
+let lastGifPath = '';
 let phase = 0;
 let gifPath = '';
 
@@ -41,6 +43,7 @@ app.use((req, res, next) => {
 
 app.get('/start', (req, res) => {
   console.log('start');
+
   // set initial values
   phase = 0;
   gifPath = '';
@@ -50,48 +53,50 @@ app.get('/start', (req, res) => {
   const uuidDir = path.join(__dirname, 'gifs', uid);
   fs.mkdirSync(uuidDir);
 
-  // TODO do this using communication to python script
-  phase = 1;
-
   // start python script to create gif
-  const options = {
-    args: [uuidDir, __dirname]
-  };
-  PythonShell.run(
-    'create_gif.py' /*'create_gif_mock.py'*/,
-    options,
-    (err, results) => {
-      if (err) throw err;
-      if (results) console.log(results);
-
-      // processing finished
-      phase = 3;
-      gifPath = 'gifs/' + uid + '/final.gif';
+  const pyShell = new PythonShell(
+    'create_gif.py',
+    // 'create_gif_mock.py',
+    {
+      args: [uuidDir, __dirname],
+      mode: 'json'
     }
   );
 
-  // setTimeout(function() {
-  //   // recording started
-  //   phase = 1;
-  //   setTimeout(function() {
-  //     // recording finished & processing started
-  //     phase = 2;
-  //     setTimeout(function() {
-  //       // processing finished
-  //       // TODO the final gif needs to be put in folder under "public/gifs"
-  //       phase = 3;
-  //       gifPath = path.join('gifs/test.gif');
-  //     }, 4000);
-  //   }, 4000);
-  // }, 1000);
+  pyShell.stdout.on('data', data => {
+    try {
+      data = JSON.parse(data);
+      if (data.phase) {
+        console.log('phase ', data.phase);
+        phase = data.phase;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  pyShell.end(err => {
+    if (err) throw err;
+
+    // processing finished
+    phase = 3;
+    gifPath = 'gifs/' + uid + '/final.gif';
+    lastGifPath = gifPath;
+  });
+
+  // send the OK for the "start" request
   res.status(200).send();
 });
 
 app.get('/status', (req, res) => {
-  console.log('status', JSON.stringify({ phase: phase, gifPath: gifPath }));
-  // TODO send back either "recording", "processing" or "finished" with
+  //console.log('status', JSON.stringify({ phase: phase, gifPath: gifPath }));
   // json data containing the GIF data
   res.json({ phase: phase, gifPath: gifPath });
+});
+
+app.get('/last', (req, res) => {
+  console.log('/last');
+  res.json({ lastGifPath });
 });
 
 app.listen(app.get('port'), () => {

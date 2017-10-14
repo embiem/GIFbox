@@ -9,5 +9,5 @@ export const PHASE_NAMES = [
   'Home',
   'Recording',
   'Processing GIF',
-  'Result'
+  'Your GIF is ready'
 ];

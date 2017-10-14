@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
-import 'typeface-roboto'
+import 'typeface-roboto';
+import 'animate.css/animate.min.css';
 
 import App from './App';
 

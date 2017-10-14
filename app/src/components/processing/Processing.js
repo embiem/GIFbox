@@ -1,33 +1,61 @@
 import React from 'react';
+import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
-import { getStatus } from '../../client';
+const styles = theme => ({
+  root: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3
+  })
+});
 
 class Processing extends React.Component {
   static inval = null;
   componentDidMount() {
-    Processing.inval = setInterval(this.checkProcessingStatus, 500);
+    Processing.inval = setInterval(this.props.checkProcessingStatus, 500);
+    this.props.fetchLastGif();
   }
 
-  checkProcessingStatus = () => {
-    getStatus().then(res => {
-      if (res.phase > 2) {
-        clearInterval(Processing.inval);
-        this.props.onProcessingFinish(res.gifPath);
-      }
-    });
+  componentWillUnmount() {
+    clearInterval(Processing.inval);
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <Grid item>
-        <Typography type="display2" gutterBottom>
-          Processing...
-        </Typography>
+        <Paper
+          className={classes.root + ' animated lightSpeedIn entry-first'}
+          elevation={4}
+        >
+          <Typography type="display2">
+            Creating your GIF...
+          </Typography>
+        </Paper>
+        {this.props.lastGifPath ? (
+          <div>
+            <Paper
+              className={classes.root + ' animated bounceInUp entry-second'}
+              elevation={4}
+            >
+              <Typography type="title">
+                While you wait, check out the latest GIF:
+              </Typography>
+            </Paper>
+            <img
+              className="animated bounceInUp entry-third"
+              src={this.props.lastGifPath}
+              alt="Latest GIF"
+            />
+          </div>
+        ) : null}
       </Grid>
     );
   }
 }
 
-export default Processing;
+export default withStyles(styles)(Processing);

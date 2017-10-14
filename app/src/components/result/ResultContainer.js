@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import Result from './Result';
 import { generalActions } from '../../redux/actions';
 import { PHASES } from '../../constants';
+import { getUrl } from '../../client';
 
 const ResultContainer = props => <Result {...props} />;
 
 const mapStateToProps = state => {
   return {
-    gifPath: state.general.gifPath
+    gifPath: `${getUrl()}/${state.general.gifPath}`
   };
 };
 
