@@ -10,6 +10,7 @@ args = sys.argv[1:]
 path_video = os.path.join(args[0], 'model.h264')
 path_gif_raw = os.path.join(args[0], 'model.gif')
 path_gif_final = os.path.join(args[0], 'final.gif')
+path_vid_to_gif = os.path.join(args[1], 'video_to_gif.sh')
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(23, GPIO.OUT)
@@ -57,7 +58,7 @@ GPIO.cleanup()
 start_time = time()
 
 # RAW-GIF
-params_raw = ['sudo', './video_to_gif.sh', path_video, path_gif_raw]
+params_raw = ['sudo', path_vid_to_gif, path_video, path_gif_raw]
 subprocess.check_call(params_raw)
 
 raw_time = time()

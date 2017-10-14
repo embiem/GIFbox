@@ -55,7 +55,7 @@ app.get('/start', (req, res) => {
 
   // start python script to create gif
   const options = {
-    args: [uuidDir]
+    args: [uuidDir, __dirname]
   };
   PythonShell.run(
     'create_gif.py' /*'create_gif_mock.py'*/,
