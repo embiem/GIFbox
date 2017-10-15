@@ -82,11 +82,11 @@ app.get('/start', (req, res) => {
   });
 
   pyShell.end(err => {
-    if (err) throw err;
+    if (err) console.error(err);
 
     // processing finished
     phase = 3;
-    gifPath = 'gifs/' + uid + '/final.gif';
+    gifPath = `gifs/${uid}/final.gif`;
     lastGifPath = gifPath;
   });
 
