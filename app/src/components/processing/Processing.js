@@ -28,16 +28,10 @@ class Processing extends React.Component {
 
     return (
       <Grid item>
-        <Paper
-          className={classes.root + ' animated lightSpeedIn entry-first'}
-          elevation={4}
-        >
-          <Typography type="display1">Creating your GIF...</Typography>
-        </Paper>
         {this.props.lastGifPath ? (
           <div>
             <Paper
-              className={classes.root + ' animated bounceInUp entry-second'}
+              className={classes.root + ' animated bounceInUp entry-first'}
               elevation={4}
             >
               <Typography type="title">
@@ -50,7 +44,14 @@ class Processing extends React.Component {
               alt="Latest GIF"
             />
           </div>
-        ) : null}
+        ) : (
+          <Paper
+            className={classes.root + ' animated lightSpeedIn entry-first'}
+            elevation={4}
+          >
+            <Typography type="display1">Creating your GIF...</Typography>
+          </Paper>
+        )}
       </Grid>
     );
   }
