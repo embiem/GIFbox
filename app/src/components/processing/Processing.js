@@ -32,9 +32,7 @@ class Processing extends React.Component {
           className={classes.root + ' animated lightSpeedIn entry-first'}
           elevation={4}
         >
-          <Typography type="display1">
-            Creating your GIF...
-          </Typography>
+          <Typography type="display1">Creating your GIF...</Typography>
         </Paper>
         {this.props.lastGifPath ? (
           <div>
